@@ -4,6 +4,10 @@ const {newDecree} = require("./Controllers/decretos-controller");
 const {newRule} = require("./Controllers/normas-controllers");
 const {newArticle} = require("./Controllers/articulos.controllers");
 const {newTransient} = require("./Controllers/transitorios-controllers");
+const {newParragraph} = require("./Controllers/parrafos-controllers");
+const {newFraction} = require("./Controllers/fracciones-controllers");
+const {newSubsection} = require("./Controllers/incisos-controllers");
+const {newInvoice} = require("./Controllers/folios-controllers");
 
 
 const router = Router()
@@ -24,14 +28,16 @@ router.post('/newarticle', newArticle)
 router.post('/newtransient', newTransient)
 
 //PARRAFOS
-router.post('/newparragraph', )
+router.post('/newparragraph', newParragraph)
 
 //FRACCIONES
-router.post('/newfraction',)
+router.post('/newfraction', newFraction)
 
 //INCISOS
-router.post('/newsubsection', )
+router.post('/newsubsection', newSubsection)
 
+//FOLIOS
+router.post('/newinvoice', newInvoice)
 
 
 
