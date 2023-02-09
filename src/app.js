@@ -42,7 +42,15 @@ app.post('/login', async(req, res, next) => {
         else {
             req.login(user, err => {
                 if(err) throw err
-                res.status(200).send("Inicio de sesión correcto")
+                console.log(user)
+                const datosLocalStorage = {
+                    message: "Inicio de Sesión correcto",
+                    status: user.active,
+                    account: user.new,
+                    permissions: user.permissions,
+                    admin: user.admin
+                }
+                res.status(200).send(datosLocalStorage)
             })
         }
     })(req, res, next)

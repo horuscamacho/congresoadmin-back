@@ -24,11 +24,25 @@ const newUser = (req, res) => {
     })
 }
 
+const getUsers = async(req, res) => {
+    if(!req.user) return res.status(404).send("Necesitas iniciar sesión para poder acceder a esta ruta.")
+    try{
+        const usuarios = await Usuario.findAll({
+            attributes: [
+                "id", "name", "last_name", "active", "permissions"
+            ]
+        })
+        res.status(200).send(usuarios)
+    }catch (e) {
+        res.status(404).send(e.message)
+    }
+}
 
 
 
 
 module.exports = {
     getUser,
-    newUser
+    newUser,
+    getUsers
 }
