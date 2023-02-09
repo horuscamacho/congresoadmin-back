@@ -13,8 +13,8 @@ module.exports = (sequelize) => {
             allowNull: false
         },
         number: {
-            type: DataTypes.STRING,
-            allowNull: false
+            type: DataTypes.INTEGER,
+            autoIncrement: true
         },
         editable: {
             type: DataTypes.BOOLEAN,

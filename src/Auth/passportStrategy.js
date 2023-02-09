@@ -6,7 +6,7 @@ module.exports = function (passport) {
     passport.use(
         new localStrategy(async (username, password, done) => {
             const usuario = await Usuario.findOne({where: {username}})
-            const data = usuario.dataValues
+            const data = usuario?.dataValues
             if (!data) return done(null, false)
             bcrypt.compare(password, data.password, (err, result) => {
                 if (err) throw err
@@ -31,7 +31,7 @@ module.exports = function (passport) {
         const infoSend = {
             id: data.id,
             active: data.active,
-            permisos: data.permisos,
+            permissions: data.permissions,
             new: data.new,
             admin: data.admin
         }

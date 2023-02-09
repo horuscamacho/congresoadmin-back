@@ -12,6 +12,7 @@ const newDecree = async (req, res) => {
         decree.setUsuario(id)
         res.status(200).send(decree)
     }catch (e) {
+        console.log(e)
         res.status(404).send(e.message)
     }
 }

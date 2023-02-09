@@ -1,4 +1,5 @@
 const express = require('express')
+const morgan = require('morgan')
 const cors = require('cors')
 const passport = require('passport')
 const cookieParser = require('cookie-parser')
@@ -16,32 +17,22 @@ app.use(cors({
     credentials: true
 }))
 app.use(session({
-    secret: "SECRETCODE",
+    secret: "CONGRESO2023",
     resave: true,
     saveUninitialized: true
 }))
-
-app.use(cookieParser('SECRETCODE'))
+app.use(morgan('dev'))
+app.use(cookieParser('CONGRESO2023'))
 app.use(passport.initialize())
 app.use(passport.session())
 require('./Auth/passportStrategy')(passport)
+app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
+    const status = err.status || 500;
+    const message = err.message || err;
+    console.error(err);
+    res.status(status).send(message);
+});
 
-app.post('/register',     (req, res) => {
-    const {username, password, } = req.body
-   Usuario.findOne({where: {username}}).then(async (doc) => {
-       if(doc) res.status(200).send('User already exists')
-        if(!doc){
-            const hashPass = await bcrypt.hash(password, 10)
-            const nuevoUsuario = await Usuario.create({
-                username,
-                password: hashPass,
-                name: "prueba",
-                last_name: "prueba"
-            })
-            res.status(200).send("User created")
-        }
-   })
-})
 
 
 app.post('/login', async(req, res, next) => {
@@ -51,7 +42,7 @@ app.post('/login', async(req, res, next) => {
         else {
             req.login(user, err => {
                 if(err) throw err
-                res.send("Successfully Authenticated")
+                res.status(200).send("Inicio de sesión correcto")
             })
         }
     })(req, res, next)
