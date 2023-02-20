@@ -43,9 +43,7 @@ const getUsers = async(req, res) => {
 
 
 const getOneUSer = async (req, res) => {
-    if(!req.user) return res.status(404).send("Necesitas iniciar sesión para poder acceder a esta ruta.")
     const {username} = req.body
-    console.log(username)
     try{
         const usuario = await Usuario.findOne({
             where: {

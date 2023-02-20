@@ -16,10 +16,21 @@ const newRule = async (req, res) => {
 }
 
 
+const getRules = async (req, res) => {
+    if(!req.user) return res.status(401).send("Tu sesión ha expirado, vuelve a iniciar sesión.")
+    try {
+        const normas = await Norma.findAll()
+        res.status(200).send(normas)
+    }catch (e) {
+        res.status(400).send(e.message)
+    }
+}
+
 
 
 
 
 module.exports = {
-    newRule
+    newRule,
+    getRules
 }

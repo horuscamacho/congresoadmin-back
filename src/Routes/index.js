@@ -1,7 +1,7 @@
 const {Router} = require('express')
 const {getUser, newUser, getUsers, getOneUSer} = require("./Controllers/usuario-controllers");
 const {newDecree} = require("./Controllers/decretos-controller");
-const {newRule} = require("./Controllers/normas-controllers");
+const {newRule, getRules} = require("./Controllers/normas-controllers");
 const {newArticle} = require("./Controllers/articulos.controllers");
 const {newTransient} = require("./Controllers/transitorios-controllers");
 const {newParragraph} = require("./Controllers/parrafos-controllers");
@@ -23,6 +23,7 @@ router.post('/newdecree', newDecree)
 
 //NORMAS
 router.post('/newrule', newRule)
+router.get('/getrules', getRules)
 
 //ARTICULOS
 router.post('/newarticle', newArticle)

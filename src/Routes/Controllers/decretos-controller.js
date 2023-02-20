@@ -2,6 +2,7 @@ const {Decreto} = require('../../db')
 
 
 const newDecree = async (req, res) => {
+    console.log(req.body)
     const {id} = req.user
     const {text, publication} = req.body
     try{

@@ -3,10 +3,8 @@ const morgan = require('morgan')
 const cors = require('cors')
 const passport = require('passport')
 const cookieParser = require('cookie-parser')
-const bcrypt = require('bcryptjs')
 const session = require('express-session')
 const bodyParser = require('body-parser')
-const {Usuario} = require('./db')
 const app = express()
 const routes = require('./Routes/index')
 
@@ -42,7 +40,6 @@ app.post('/login', async(req, res, next) => {
         else {
             req.login(user, err => {
                 if(err) throw err
-                console.log(user)
                 const datosLocalStorage = {
                     message: "Inicio de Sesión correcto",
                     status: user.active,
