@@ -1,11 +1,19 @@
-const {Norma} = require('../../db')
+const {Norma, Decreto} = require('../../db')
 
 const newRule = async (req, res) => {
     const {id} = req.user
-    const {name, decretoId} = req.body
+    const {rule, decretoId} = req.body
     try{
+
+        const decreto = await Decreto.findOne({
+            where: {
+                id: decretoId
+            }
+        })
+
         const nuevaNorma = await Norma.create({
-            name
+            name: rule,
+            active: decreto.publication
         })
         nuevaNorma.setUsuario(id)
         nuevaNorma.setDecreto(decretoId)

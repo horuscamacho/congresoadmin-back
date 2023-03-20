@@ -16,6 +16,21 @@ const newArticle = async (req, res) => {
     }
 }
 
+const getAllArticles = async (req, res) => {
+    const {norma} = req.params
+    try{
+        const articulos = await Articulo.findAll({
+            where: {
+                normaId: norma
+            }
+        })
+        res.status(200).send(articulos)
+    } catch (e) {
+        res.status(400).send(e.message)
+    }
+}
+
+
 module.exports = {
     newArticle
 }

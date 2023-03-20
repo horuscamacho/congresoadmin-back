@@ -58,64 +58,58 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 
 //Hasta aquí ya tenemos los modelos importados y hay que desestructurarlos
-const { Usuario, Decreto, Norma, Articulo, Transitorio, Parrafo, Fraccion, Inciso, Folio } = sequelize.models
+const { Usuario, Decreto, Modificacione, Norma, Articulo, Transitorio, Folio } = sequelize.models
 
 //Acá inicio con las asociaciones
 //USUARIOS
 Usuario.hasMany(Decreto)
 Decreto.belongsTo(Usuario)
+Usuario.hasMany(Modificacione)
+Modificacione.belongsTo(Usuario)
 Usuario.hasMany(Norma)
 Norma.belongsTo(Usuario)
 Usuario.hasMany(Articulo)
 Articulo.belongsTo(Usuario)
 Usuario.hasMany(Transitorio)
 Transitorio.belongsTo(Usuario)
-Usuario.hasMany(Parrafo)
-Parrafo.belongsTo(Usuario)
-Usuario.hasMany(Fraccion)
-Fraccion.belongsTo(Usuario)
-Usuario.hasMany(Inciso)
-Inciso.belongsTo(Usuario)
 Usuario.hasMany(Folio)
+Folio.belongsTo(Usuario)
+
+
 //DECRETOS
-Decreto.hasMany(Norma)
+Decreto.hasOne(Norma)
 Norma.belongsTo(Decreto)
 Decreto.hasMany(Articulo)
 Articulo.belongsTo(Decreto)
+
+
+//MODIFICACIONES
+Modificacione.belongsToMany(Norma, {through: "Modificacion_Norma"})
+Norma.belongsToMany(Modificacione, {through: "Modificacion_Norma"})
+Modificacione.belongsToMany(Articulo, {through: "Modificacion_Articulo"})
+Articulo.belongsToMany(Modificacione, {through: "Modificacion_Articulo"})
+
+
 //NORMAS
 Norma.hasMany(Articulo)
 Articulo.belongsTo(Norma)
 Norma.hasMany(Transitorio)
 Transitorio.belongsTo(Norma)
-//ARTICULOS
-Articulo.hasMany(Parrafo)
-Parrafo.belongsTo(Articulo)
-Articulo.hasMany(Fraccion)
-Fraccion.belongsTo(Articulo)
-Articulo.hasMany(Inciso)
-Inciso.belongsTo(Articulo)
-//TRANSITORIO
-Transitorio.hasMany(Parrafo)
-Parrafo.belongsTo(Transitorio)
-Transitorio.hasMany(Fraccion)
-Fraccion.belongsTo(Transitorio)
-Transitorio.hasMany(Inciso)
-Inciso.belongsTo(Transitorio)
-//PARRAFOS
-Parrafo.hasMany(Inciso)
-Inciso.belongsTo(Parrafo)
-Parrafo.hasMany(Fraccion)
-Fraccion.belongsTo(Parrafo)
-//Folios
-Folio.belongsTo(Usuario)
-Folio.belongsTo(Decreto)
-Folio.belongsTo(Norma)
-Folio.belongsTo(Articulo)
-Folio.belongsTo(Transitorio)
-Folio.belongsTo(Articulo)
-Folio.belongsTo(Parrafo)
-Folio.belongsTo(Fraccion)
-Folio.belongsTo(Inciso)
+
+
+//FOLIOS
+Folio.hasOne(Norma)
+Norma.belongsTo(Folio)
+Folio.hasOne(Modificacione)
+Modificacione.belongsTo(Folio)
+Folio.hasOne(Articulo)
+Articulo.belongsTo(Folio)
+Folio.hasOne(Transitorio)
+Transitorio.belongsTo(Folio)
+
+
+
+console.log(sequelize.models)
 
 
 module.exports = {
