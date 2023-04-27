@@ -1,5 +1,5 @@
 const {Router} = require('express')
-const {getUser, newUser, getUsers, getOneUSer} = require("./Controllers/usuario-controllers");
+const {getUser, newUser, getUsers, getOneUSer, checkUser} = require("./Controllers/usuario-controllers");
 const {newDecree, getDecrees, newDecreeN, decreesModifications} = require("./Controllers/decretos-controller");
 const {newRule, getRules} = require("./Controllers/normas-controllers");
 const {newArticle} = require("./Controllers/articulos.controllers");
@@ -16,6 +16,7 @@ router.get('/user', getUser)
 router.get('/getusers', getUsers)
 router.post('/getoneuser', getOneUSer)
 router.post("/register", newUser)
+router.post('/check-user', checkUser)
 
 //DECRETOS-MODIFICACIONES
 router.post('/newdecree', newDecree)

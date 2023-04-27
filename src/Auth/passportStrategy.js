@@ -32,8 +32,6 @@ module.exports = function (passport) {
             id: data.id,
             active: data.active,
             permissions: data.permissions,
-            new: data.new,
-            admin: data.admin
         }
         cb(null, infoSend)
     })

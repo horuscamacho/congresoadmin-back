@@ -9,7 +9,7 @@ module.exports = (sequelize) => {
             primaryKey: true
         },
         username: {
-            type: DataTypes.STRING(5),
+            type: DataTypes.STRING(8),
             allowNull: false,
             unique: true
         },
@@ -20,25 +20,21 @@ module.exports = (sequelize) => {
         permissions: {
             type: DataTypes.STRING,
         },
-        admin: {
-            type: DataTypes.BOOLEAN,
-            defaultValue: false
-        },
-        new: {
-            type: DataTypes.BOOLEAN,
-            defaultValue: true
-        },
         name: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
-        last_name: {
             type: DataTypes.STRING,
             allowNull: false
         },
         active: {
             type: DataTypes.BOOLEAN,
-            defaultValue: true
+            defaultValue: false
+        },
+        img : {
+            type: DataTypes.STRING,
+            defaultValue: 'https://firebasestorage.googleapis.com/v0/b/logos-img.appspot.com/o/user.png?alt=media&token=f420b469-d604-452e-a306-f4a5601596f7'
+        },
+        email: {
+            type: DataTypes.STRING,
+            allowNull: false,
         }
     })
 }

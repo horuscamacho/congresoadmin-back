@@ -108,8 +108,8 @@ Folio.hasOne(Transitorio)
 Transitorio.belongsTo(Folio)
 
 
-
-console.log(sequelize.models)
+//
+// console.log(sequelize.models)
 
 
 module.exports = {

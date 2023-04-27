@@ -5,24 +5,31 @@ const getUser = (req, res) => {
 }
 
 
-const newUser = (req, res) => {
-    const {username, password, name, last_name, permissions, admin} = req.body
-    Usuario.findOne({where: {username}}).then(async (doc) => {
-        if(doc) res.status(200).send(`El usuario ${username} ya existe, intenta con uno diferente.`)
-        if(!doc){
-            const hashPass = password ? await bcrypt.hash(password, 10) : await bcrypt.hash("123456", 10)
-            const nuevoUsuario = await Usuario.create({
-                username,
-                password: hashPass,
-                name,
-                last_name,
-                permissions,
-                admin: admin ? admin : false
-            })
-            res.status(200).send(`El usuario ${username} ha sido creado correctamente.`)
-        }
-    })
+const newUser = async (req, res) => {
+    try {
+        const {username, password, name, email} = req.body
+        const hashPass = await bcrypt.hash(password, 10)
+        const nuevoUsuario = await Usuario.create({
+            username,
+            password: hashPass,
+            name,
+            email
+        })
+        res.status(200).send({message: 'Usuario creado correctamente'})
+    } catch (e) {
+        console.log(e.message)
+    }
 }
+
+
+/*const hashPass = password ? await bcrypt.hash(password, 10) : await bcrypt.hash("123456", 10)
+                const nuevoUsuario = await Usuario.create({
+                    username,
+                    password: hashPass,
+                    name,
+                    permissions,
+                    email
+                })*/
 
 const getUsers = async(req, res) => {
     if(!req.user) return res.status(404).send("Necesitas iniciar sesión para poder acceder a esta ruta.")
@@ -59,10 +66,37 @@ const getOneUSer = async (req, res) => {
     }
 }
 
+const checkUser = async (req, res) => {
+    console.log(req.body)
+    try{
+        const {username, email} = req.body;
+        const usuario = await Usuario.findAll(
+            {where: {username: username}}
+        )
+        const correo = await Usuario.findAll(
+            {
+                where: {email: email}
+            }
+        )
+        if(usuario.length > 0 || correo.length > 0)
+        {
+            res.status(220).send({
+                availableUser: false,
+            })
+        } else {
+            res.status(200).send({
+                availableUser: true,
+            })
+        }
+    }catch (e) {
+        res.status(400).send(e.message)
+    }
+}
 
 module.exports = {
     getUser,
     newUser,
     getUsers,
-    getOneUSer
+    getOneUSer,
+    checkUser
 }
