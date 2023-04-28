@@ -34,6 +34,7 @@ app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
 
 
 app.post('/login', async(req, res, next) => {
+    console.log(req.body)
     passport.authenticate('local', (err, user, info) => {
         if(err) throw err
         if(!user) res.status(200).send('Credenciales incorrectas')
